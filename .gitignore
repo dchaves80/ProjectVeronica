@@ -1,5 +1,14 @@
 ﻿Facturacion3/.vs
 NeuralOlympus/obj
+NeuralOlympus/bin
+NeuralOlympus/bin/Debug
+NeuralOlympus/bin/Debug/*.dll
+TestPool/obj
+TestPool/bin
+TestPool/bin/Debug
+TestPool/bin/Debug/*.dll
 /.vs
 *.csproj.user
-#Ultima actualización 3.28am 2018-10-03
+*.dll
+*.pdb
+#Ultima actualización 3.28am 2018-10-18

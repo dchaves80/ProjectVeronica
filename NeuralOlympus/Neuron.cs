@@ -13,7 +13,7 @@ namespace NeuralOlympus
         Layer _OwnerLayer;
         Layer.LayerType NeuronType;
         List<Synapse> InputSynapse = new List<Synapse>();
-        List<Synapse> OutputSynapse=new List<Synapse>();
+        List<Synapse> OutputSynapse= new List<Synapse>();
 
         public void SetInputConnection(Synapse S)
         {
