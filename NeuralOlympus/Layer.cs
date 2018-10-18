@@ -9,7 +9,7 @@ namespace NeuralOlympus
 
 
 
-    public class Layer
+    public class Layer: coreclass.NetworkNucleusEntity
     {
         private bool Calculated = false;
         private int _NeuronQuantity;

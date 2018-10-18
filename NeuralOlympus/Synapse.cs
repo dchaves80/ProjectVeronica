@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NeuralOlympus
 {
-    public class Synapse
+    public class Synapse: coreclass.NetworkNucleusEntity
     {
         private Neuron _BeginningNeuron;
         private Neuron _FinalNeuron;

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NeuralOlympus
 {
-    public partial class Network
+    public partial class Network: coreclass.NetworkNucleusEntity
     {
         private int _Inputs;
         private int _HiddenLayers;
@@ -19,6 +19,7 @@ namespace NeuralOlympus
         private List<Layer> HiddenLayers = new List<Layer>();
         private Layer OutputLayer;
         private List<Synapse> Synapses = new List<Synapse>();
+        
 
         public enum Activator { TAN, RELU, SIG };
         public enum EjecutionMode { SYNC, ASYNC };

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NeuralOlympus
 {
-    public class Neuron
+    public class Neuron:coreclass.NetworkNucleusEntity
     {
         float _Bias;
         float _Result;
