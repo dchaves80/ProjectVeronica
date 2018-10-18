@@ -6,25 +6,25 @@ using System.Threading.Tasks;
 
 namespace NeuralOlympus
 {
-    public class Perceptron
+    public class Neuron
     {
         float _Bias;
         float _Result;
         Layer _OwnerLayer;
         Layer.LayerType NeuronType;
-        Synapse InputSynapse;
-        Synapse OutputSynapse;
+        List<Synapse> InputSynapse = new List<Synapse>();
+        List<Synapse> OutputSynapse=new List<Synapse>();
 
         public void SetInputConnection(Synapse S)
         {
-            InputSynapse = S;
+            InputSynapse.Add(S);
         }
         public void SetOutputConnection(Synapse S)
         {
-            OutputSynapse = S;
+            OutputSynapse.Add(S);
         }
 
-        public Perceptron(Layer OwnerLayer)
+        public Neuron(Layer OwnerLayer)
         {
             Random R = new Random(DateTime.Now.Millisecond);
             

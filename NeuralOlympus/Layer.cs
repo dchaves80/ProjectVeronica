@@ -12,17 +12,18 @@ namespace NeuralOlympus
     public class Layer
     {
         private bool Calculated = false;
-        private int _PerceptronQuantity;
+        private int _NeuronQuantity;
         private LayerType _TypeOfLayer;
         private Network _OwnerNetwork;
         public enum LayerType { Input, Hidden, Output }
-        private List<Perceptron> PerceptronList = new List<Perceptron>();
+        private List<Neuron> NeuronList = new List<Neuron>();
 
         public LayerType LAYERTYPE { get { return _TypeOfLayer; } }
+        public List<Neuron> NEURONS { get { return NeuronList; } }
 
-        public Layer(int PerceptronQuantity, LayerType TypeOfLayer,Network OwnerNetwork)
+        public Layer(int NeuronQuantity, LayerType TypeOfLayer,Network OwnerNetwork)
         {
-            _PerceptronQuantity = PerceptronQuantity;
+            _NeuronQuantity = NeuronQuantity;
             _TypeOfLayer = TypeOfLayer;
             _OwnerNetwork = OwnerNetwork;
             Init();
@@ -30,9 +31,9 @@ namespace NeuralOlympus
 
         private void Init()
         {
-            for (int a = 0; a < _PerceptronQuantity; a++)
+            for (int a = 0; a < _NeuronQuantity; a++)
             {
-                PerceptronList.Add(new Perceptron(this));
+                NeuronList.Add(new Neuron(this));
             }
         }
     }

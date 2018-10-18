@@ -16,20 +16,20 @@ namespace NeuralOlympus
         private Activator _ActivationFunction;
         private EjecutionMode _EjecMode;
         private Layer InputLayer;
-        private List<Layer> HiddenLayers;
+        private List<Layer> HiddenLayers = new List<Layer>();
         private Layer OutputLayer;
-        private List<Synapse> Synapses;
+        private List<Synapse> Synapses = new List<Synapse>();
 
         public enum Activator { TAN, RELU, SIG };
         public enum EjecutionMode { SYNC, ASYNC };
         
 
 
-        public Network(int Inputs, int HiddenLayers, int NeuronByLayer, int Outputs, bool Initialize = true, bool InMemmoryLog = false, Activator ActivationFunction = Activator.RELU, EjecutionMode EjecMode = EjecutionMode.SYNC)
+        public Network(int Inputs, int HiddenLayers, int NeuronsByLayer, int Outputs, bool Initialize = true, bool InMemmoryLog = false, Activator ActivationFunction = Activator.RELU, EjecutionMode EjecMode = EjecutionMode.SYNC)
         {
             _Inputs = Inputs;
             _HiddenLayers = HiddenLayers;
-            _NeuronsByLayer = NeuronByLayer;
+            _NeuronsByLayer = NeuronsByLayer;
             _Outputs = Outputs;
             _ActivationFunction = ActivationFunction;
             if (Initialize == true)
@@ -71,6 +71,36 @@ namespace NeuralOlympus
 
         private void CreateConnections()
         {
+            //Para unicamente Inputs a primer capa
+            foreach (Neuron Nb in InputLayer.NEURONS) { 
+                foreach (Neuron Ne in HiddenLayers[0].NEURONS)
+                {
+                    Synapses.Add(new Synapse(this, Nb, Ne));
+                }
+            }
+
+            //Para Conexion Entre capas menos capa final
+            for (int a = 0; a < _HiddenLayers - 2; a++)
+            {
+                Layer Lb = HiddenLayers[a];
+                Layer Le = HiddenLayers[a + 1];
+                foreach (Neuron Nb in Lb.NEURONS)
+                {
+                    foreach (Neuron Ne in Le.NEURONS)
+                    {
+                        Synapses.Add(new Synapse(this, Nb, Ne));
+                    }
+                }
+            }
+
+            //Para conexion Final
+            foreach (Neuron Nb in HiddenLayers[HiddenLayers.Count-1].NEURONS)
+            {
+                foreach (Neuron Ne in OutputLayer.NEURONS)
+                {
+                    Synapses.Add(new Synapse(this, Nb, Ne));
+                }
+            }
 
         }
 

@@ -8,22 +8,26 @@ namespace NeuralOlympus
 {
     public class Synapse
     {
-        private Perceptron _BeginningPerceptron;
-        private Perceptron _FinalPerceptron;
-        
+        private Neuron _BeginningNeuron;
+        private Neuron _FinalNeuron;
         private float Weight;
 
         public float WEIGHT { get { return Weight; } }
+        public Neuron BEGINNING_NEURON{ get { return _BeginningNeuron; } }
+        public Neuron FINAL_NEURON { get { return _FinalNeuron; } }
 
-        public Synapse(Network OwnerNetwork, Perceptron BeginningPerceptron, Perceptron FinalPerceptron)
+        public Synapse(Network OwnerNetwork, Neuron BeginningNeuron, Neuron FinalNeuron)
         {
-            _BeginningPerceptron = BeginningPerceptron;
-            _FinalPerceptron = FinalPerceptron;
+            _BeginningNeuron = BeginningNeuron;
+            _FinalNeuron = FinalNeuron;
+            Init();
         }
         private void Init()
         {
             Random R = new Random(DateTime.Now.Millisecond);
             Weight = R.Next(-100,100) / 100f;
+           _BeginningNeuron.SetOutputConnection(this);
+            _FinalNeuron.SetInputConnection(this);
         }
     }
 }
