@@ -20,6 +20,7 @@ namespace NeuralOlympus
 
         public LayerType LAYERTYPE { get { return _TypeOfLayer; } }
         public List<Neuron> NEURONS { get { return NeuronList; } }
+        public Network NETWORK { get { return _OwnerNetwork; } }
 
         public Layer(int NeuronQuantity, LayerType TypeOfLayer,Network OwnerNetwork)
         {
@@ -29,6 +30,35 @@ namespace NeuralOlympus
             Init();
         }
 
+        public void Calculate()
+        {
+            if (_TypeOfLayer == LayerType.Hidden)
+            {
+                foreach (Neuron N in NeuronList)
+                {
+                    N.Calculate();
+                }
+            }
+            if (_TypeOfLayer == LayerType.Output)
+            {
+                foreach (Neuron N in NeuronList)
+                {
+                    N.CalculateLastLayer();
+                }
+            }
+        }
+
+        public void AdjustLayer(int Error)
+        {
+            if (_TypeOfLayer == LayerType.Hidden)
+            {
+                foreach (Neuron N in NeuronList)
+                {
+                    N.AdjustBias(Error);
+                }
+            }
+        }
+
         private void Init()
         {
             for (int a = 0; a < _NeuronQuantity; a++)
@@ -36,5 +66,6 @@ namespace NeuralOlympus
                 NeuronList.Add(new Neuron(this));
             }
         }
+        
     }
 }
