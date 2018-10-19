@@ -48,7 +48,7 @@ namespace NeuralOlympus
             }
         }
 
-        public void AdjustLayer(int Error)
+        public void AdjustLayer(float Error)
         {
             if (_TypeOfLayer == LayerType.Hidden)
             {

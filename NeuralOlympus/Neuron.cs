@@ -28,20 +28,23 @@ namespace NeuralOlympus
 
 
 
-        public void AdjustBias(int Error)
+        public void AdjustBias(float Error)
         {
-            Random R = new Random(DateTime.Now.Millisecond);
-            int Thershold = R.Next(Error * -1, Error);
-            _Bias = _Bias + Thershold;
-            char[] separator = { '.' };
-            if (_Bias > 1f || _Bias < 1f)
+            
+            
+            int Thershold = 0;
+            if (Error < 0)
             {
-                _Bias = (float)Math.Round((decimal)_Bias);
-                string stringbias = _Bias.ToString().Split(separator)[0];
-                int divider = stringbias.Length*10;
-                _Bias = _Bias / divider;
+                Thershold = RandomClass.R.Next((int)Error, (int)Error * -1);
             }
-          }
+            else
+            {
+                Thershold = RandomClass.R.Next((int)Error * -1, (int)Error);
+            }
+            _Bias = _Bias + Thershold*10;
+            if (_Bias > 1) _Bias = -1;
+            if (_Bias < -1) _Bias = 1;
+        }
 
         public void setInput(float inp)
         {
@@ -56,13 +59,14 @@ namespace NeuralOlympus
             float tResult = 0f;
             foreach (Synapse S in InputSynapse)
             {
-                tResult += S.BEGINNING_NEURON.RESULT;
+                tResult += (tResult * S.BEGINNING_NEURON.RESULT)+_Bias;
             }
             _Result = tResult;
         }
 
         public void Calculate()
         {
+            _Result = 0f;
             float tResult = 0f;
             foreach (Synapse S in InputSynapse)
             {
@@ -80,9 +84,11 @@ namespace NeuralOlympus
             }
             if (_OwnerLayer.NETWORK.ACTIVATION_FUNCTION == Network.Activator.TAN)
             {
-                tResult = (float)Math.Tan(tResult);
+                tResult = (float)Math.Tanh(tResult);
             }
-            if (tResult > 0f)
+            if (tResult > 0f) tResult = 1;
+            if (tResult < -0f) tResult = -1;
+            if (tResult == 1f || tResult==-1f)
             {
                 _Result = tResultNoActivation;
             }
@@ -90,6 +96,8 @@ namespace NeuralOlympus
             {
                 _Result = 0f;
             }
+            
+            
            
 
         }

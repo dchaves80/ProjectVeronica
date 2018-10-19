@@ -25,7 +25,7 @@ namespace NeuralOlympus
         public enum Activator { TAN, RELU, SIG };
         public enum EjecutionMode { SYNC, ASYNC };
 
-
+        public List<Synapse> GetSynapses { get { return Synapses; } }
 
         public Network(int Inputs, int HiddenLayers, int NeuronsByLayer, int Outputs, bool Initialize = true, bool InMemmoryLog = false, Activator ActivationFunction = Activator.RELU, EjecutionMode EjecMode = EjecutionMode.SYNC)
         {
@@ -98,25 +98,29 @@ namespace NeuralOlympus
 
             
 
-            float Result = 0f;
+            float ResultError = 0f;
 
             for (int a=0; a<ExpectedValues.Length; a++)
             {
                 results.Add(OutputLayer.NEURONS[a].RESULT);
                 float SubResultThershold = ExpectedValues[a] - OutputLayer.NEURONS[a].RESULT;
-                if (SubResultThershold < 0f) { SubResultThershold = SubResultThershold * -1; }
-                Result += SubResultThershold;
+                ResultError += SubResultThershold;
             }
             
-            return new NetworkResult(Result,results.ToArray());
+            return new NetworkResult(ResultError,results.ToArray());
 
         }
 
-        public void AdjustNetwork(int Error)
+        public void AdjustNetwork(float Error)
         {
             foreach (Layer L in HiddenLayers)
             {
                 L.AdjustLayer(Error);
+            }
+            for ( int a=0;a<Synapses.Count;a++)
+            {
+                Synapse S = Synapses[a];
+                S.AdjustWeight(Error);
             }
         }
 

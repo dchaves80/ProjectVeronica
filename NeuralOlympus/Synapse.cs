@@ -22,19 +22,22 @@ namespace NeuralOlympus
             _FinalNeuron = FinalNeuron;
             Init();
         }
-        public void AdjustWight(int Error)
+        public void AdjustWeight(float Error)
         {
-            Random R = new Random(DateTime.Now.Millisecond);
-            int Thershold = R.Next(Error * -1, Error);
-            Weight = Weight + Thershold;
-            char[] separator = { '.' };
-            if (Weight > 1f || Weight < 1f)
+            
+            int Thershold = 0;
+            if (Error < 0)
             {
-                Weight = (float)Math.Round((decimal)Weight);
-                string stringweight = Weight.ToString().Split(separator)[0];
-                int divider = stringweight.Length * 10;
-                Weight = Weight / divider;
+                Thershold = RandomClass.R.Next((int)Error, (int)Error * -1);
             }
+            else
+            {
+                Thershold = RandomClass.R.Next((int)Error * -1, (int)Error);
+            }
+            Weight = Weight + Thershold*10;
+            if (Weight > 1) Weight = 1;
+            if (Weight < -1) Weight = -1;
+
         }
         private void Init()
         {
